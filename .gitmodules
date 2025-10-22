@@ -1,0 +1,16 @@
+[submodule "halos-pi-gen"]
+	path = halos-pi-gen
+	url = ../halos-pi-gen/
+	branch = halos
+[submodule "casaos-docker-service"]
+	path = casaos-docker-service
+	url = ../casaos-docker-service
+	branch = main
+[submodule "casaos-marine-store"]
+	path = casaos-marine-store
+	url = ../casaos-marine-store
+	branch = main
+[submodule "apt.hatlabs.fi"]
+	path = apt.hatlabs.fi
+	url = git@github.com:hatlabs/apt.hatlabs.fi.git
+	branch = main
