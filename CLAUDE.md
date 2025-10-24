@@ -2,7 +2,9 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-@halos-pi-gen/CLAUDE.md#Git Workflow Policy
+## Git Workflow Policy
+
+For git workflow policies that apply to all repositories in this monorepo, see the Git Workflow Policy section in @halos-pi-gen/CLAUDE.md
 
 ## Documentation Strategy
 
@@ -27,7 +29,9 @@ Halos (Hat Labs Operating System) is a custom Raspberry Pi OS distribution with 
 - **Cockpit** (port 9090): Web-based system administration interface
 - **CasaOS** (port 80/443): Container and app management with user-friendly UI
 
-@halos-pi-gen/CLAUDE.md#Image Variants
+## Image Variants
+
+For detailed information about image variants, naming conventions, and configuration options, see the Image Variants section in @halos-pi-gen/CLAUDE.md
 
 ## Monorepo Structure
 
@@ -95,15 +99,32 @@ git add halos-pi-gen
 git commit -m "Update halos-pi-gen submodule"
 ```
 
-@halos-pi-gen/CLAUDE.md#Build and Release Pipeline
+## Build and Release Pipeline
 
-@halos-pi-gen/CLAUDE.md#Technology Stack
+For detailed information about the build and release pipeline, including Debian package building and CI/CD workflows, see the Build and Release Pipeline section in @halos-pi-gen/CLAUDE.md
+
+## Technology Stack
+
+For comprehensive technology stack information, see the Technology Stack section in @halos-pi-gen/CLAUDE.md
 
 ## Development Workflow
 
-@halos-pi-gen/CLAUDE.md#Creating New Image Variants
+For component-specific development workflows and patterns:
+```
 
-@halos-pi-gen/CLAUDE.md#Common Development Patterns
+## Build and Release Pipeline
+
+For detailed information about the build and release pipeline, including Debian package building and CI/CD workflows, see: [halos-pi-gen Build and Release Pipeline](halos-pi-gen/CLAUDE.md#build-and-release-pipeline)
+
+## Technology Stack
+
+For comprehensive technology stack information, see: [halos-pi-gen Technology Stack](halos-pi-gen/CLAUDE.md#technology-stack)
+
+## Development Workflow
+
+## Development Workflow
+
+For component-specific development workflows and patterns, see the Creating New Image Variants and Common Development Patterns sections in @halos-pi-gen/CLAUDE.md
 
 ### Making Changes to a Specific Component
 
