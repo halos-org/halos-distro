@@ -34,7 +34,7 @@ declare -A REPOS=(
   ["halos-pi-gen"]="git@github.com:hatlabs/halos-pi-gen.git halos"
   ["apt.hatlabs.fi"]="git@github.com:hatlabs/apt.hatlabs.fi.git main"
   ["runtipi-marine-app-store"]="git@github.com:hatlabs/runtipi-marine-app-store.git main"
-  ["runtipi-docker-service"]="https://github.com/hatlabs/runtipi-docker-service.git main"
+  ["runtipi-docker-service"]="git@github.com:hatlabs/runtipi-docker-service.git main"
 )
 
 ################################################################################
