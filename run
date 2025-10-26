@@ -31,10 +31,12 @@ readonly SCRIPT="$PROJECT_ROOT/$(basename "$0")"
 # Repository Definitions
 
 declare -A REPOS=(
-  ["halos-pi-gen"]="git@github.com:hatlabs/halos-pi-gen.git halos"
+  ["halos-pi-gen"]="git@github.com:hatlabs/halos-pi-gen.git main"
   ["apt.hatlabs.fi"]="git@github.com:hatlabs/apt.hatlabs.fi.git main"
   ["runtipi-marine-app-store"]="git@github.com:hatlabs/runtipi-marine-app-store.git main"
   ["runtipi-docker-service"]="git@github.com:hatlabs/runtipi-docker-service.git main"
+  ["avnav-docker"]="git@github.com:hatlabs/avnav-docker.git main"
+  ["opencpn-docker"]="git@github.com:hatlabs/opencpn-docker.git main"
 )
 
 ################################################################################
@@ -70,7 +72,7 @@ function repos:clone {
 }
 
 function repos:pull-all-main {
-  #@ Pull latest changes from main/halos branches for all repos
+  #@ Pull latest changes from main branches for all repos
   #@ Category: Repository Management
   echo "🔄 Updating all repositories..."
 
