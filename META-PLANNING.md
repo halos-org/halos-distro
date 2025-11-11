@@ -94,12 +94,20 @@ halos-distro/                      # Workspace coordinator (this repo)
 ### Phase 2+ Components (Concept)
 
 4. **cockpit-container-config** - Container app configuration UI
-   - [docs/CONTAINER_CONFIG_DESIGN.md](docs/CONTAINER_CONFIG_DESIGN.md) - High-level concept
+   - [docs/CONTAINER_CONFIG_DESIGN.md](docs/CONTAINER_CONFIG_DESIGN.md) - High-level concept (Phase 2)
    - Implementation: After Phase 1 complete
 
 5. **WiFi configuration** - Enhanced network management
-   - [docs/WIFI_CONFIG_DESIGN.md](docs/WIFI_CONFIG_DESIGN.md) - High-level concept
+   - [docs/WIFI_CONFIG_DESIGN.md](docs/WIFI_CONFIG_DESIGN.md) - High-level concept (Phase 3)
    - Implementation: After Phase 2 complete
+
+6. **homarr-container** - Dashboard landing page
+   - [docs/HOMARR_INTEGRATION_DESIGN.md](docs/HOMARR_INTEGRATION_DESIGN.md) - Integration design (Phase 3.5)
+   - Implementation: After Phase 3 complete
+
+7. **halos-traefik-container** - Reverse proxy for clean URLs
+   - [docs/TRAEFIK_INTEGRATION_DESIGN.md](docs/TRAEFIK_INTEGRATION_DESIGN.md) - Integration design (Phase 4)
+   - Implementation: After Phase 3.5 complete
 
 ## Implementation Phases
 
@@ -139,30 +147,92 @@ halos-distro/                      # Workspace coordinator (this repo)
 
 ### Phase 3: Expansion & Polish 🔮
 
-**Goal**: More apps, converters, additional stores, WiFi config
+**Goal**: More apps, additional stores, WiFi configuration
 
 **Status**: Concept (after Phase 2)
 
 **Key Features**:
 - 20+ marine apps
-- Converter tools (import from other stores)
-- Additional store categories
+- Additional store categories (development, home automation)
 - WiFi configuration in Cockpit
+- Converter tools (import from other app stores)
 
 **Timeline**: 2026 Q2+
 
-### Phase 4: Upstream & Community 🌐
+### Phase 3.5: Dashboard Integration 🎨
+
+**Goal**: Unified landing page with Homarr dashboard
+
+**Status**: Design Complete (after Phase 3)
+
+**Components**:
+- homarr-container - Dashboard application
+- homarr-container-adapter - Auto-discovery service (Rust)
+
+**Key Features**:
+- Auto-discovery of installed container apps via Docker labels
+- Default landing page at `http://halos.local/`
+- User-customizable dashboard (add/remove/reorder apps)
+- Quick access to Cockpit and all installed apps
+- Pre-installed in HaLOS images
+
+**Deliverables**:
+- Homarr packaged as container app
+- Rust adapter for periodic container scanning
+- Docker label generation in container-packaging-tools
+- Integration with cockpit-container-config (optional)
+
+**Documentation**:
+- [docs/HOMARR_INTEGRATION_DESIGN.md](docs/HOMARR_INTEGRATION_DESIGN.md) - Integration design
+
+**Timeline**: 2026 Q3
+
+### Phase 4: Reverse Proxy Integration 🔀
+
+**Goal**: Clean URLs with Traefik reverse proxy
+
+**Status**: Design Complete (after Phase 3.5)
+
+**Components**:
+- halos-traefik-container - Reverse proxy with auto-configuration
+
+**Key Features**:
+- Clean URLs instead of random ports (e.g., `halos.local/signalk`)
+- Optional integration (direct port access as fallback)
+- User choice per app (Traefik, direct port, or both)
+- HTTPS with self-signed or Let's Encrypt certificates
+- Traefik labels in docker-compose.yml (Runtipi style)
+- Pre-installed in HaLOS images
+
+**Deliverables**:
+- Traefik packaged as container app
+- Traefik label generation in container-packaging-tools
+- Auto-detection of domain for Let's Encrypt
+- Integration with Homarr (dashboard shows proxy URLs)
+
+**Documentation**:
+- [docs/TRAEFIK_INTEGRATION_DESIGN.md](docs/TRAEFIK_INTEGRATION_DESIGN.md) - Integration design
+
+**Timeline**: 2026 Q4
+
+**Open Questions** (TBD during implementation):
+- URL scheme: Path-based vs subdomain-based?
+- Traefik as required dependency?
+- Default HTTPS always or HTTP by default?
+
+### Phase 5: Upstream & Community 🌐
 
 **Goal**: Upstream contributions and community maintenance
 
-**Status**: Long-term vision
+**Status**: Long-term vision (after Phase 4)
 
 **Key Features**:
 - Submit cockpit-apt to Debian/Ubuntu
-- Public store creation documentation
+- Public documentation for creating custom stores
 - Community contribution workflows
+- Quality assurance and security review processes
 
-**Timeline**: 2026+
+**Timeline**: 2027+
 
 ## Progress Tracking
 
