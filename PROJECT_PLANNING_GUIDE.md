@@ -129,7 +129,7 @@ Caveats:
 - `priority:low` for nice-to-haves
 - Unlabeled issues are implicit medium priority
 
-**After issue creation:** Delete or archive TASKS.md as it has served its purpose
+**After issue creation:** Delete TASKS.md as it has served its purpose (or archive outside repository if historical reference is needed)
 
 ## Development Workflow
 
@@ -273,7 +273,7 @@ You: Approve or adjust
 
 ### Do
 
-- Keep TASKS.md detailed for initial planning, then move to issues
+- Use TASKS.md as detailed temporary planning file, then delete after creating issues
 - Put implementation details and plans in GitHub issues
 - Use natural language with Claude Code
 - Reference issues in commits for git history
@@ -339,16 +339,16 @@ Claude Code:
 
 ```
 User creates issue: "API returns 500 on invalid JSON"
-You: Add label type:bug, priority:high
-You: "Claude, fix issue #47"
+Human: Add label type:bug, priority:high
+Human: "Claude, fix issue #47"
 Claude Code: Fixes, tests, commits, closes issue
 
 User creates issue: "Add pagination to list endpoint"
-You: Add label type:feature
-You: "Implement issue #48"
+Human: Add label type:feature
+Human: "Implement issue #48"
 Claude Code: Implements according to spec
-You: Review and request changes via conversation
+Human: Review and request changes via conversation
 Claude Code: Adjusts
-You: "Ship it"
+Human: "Ship it"
 Claude Code: Merges, closes issue
 ```
