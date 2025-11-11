@@ -377,7 +377,7 @@ Runtipi will be replaced (not migrated) once equivalent functionality is availab
 - **Phase 4**: Traefik replaces Runtipi's reverse proxy
 - Runtipi removed from HaLOS images after Phase 4 complete
 
-Users install HaLOS during transition will have Runtipi available until the new stack is ready.
+Users installing HaLOS during the transition will have Runtipi available until the new stack is ready.
 
 ## Development
 
