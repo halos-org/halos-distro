@@ -4,28 +4,54 @@
 
 This guide shows you how to work effectively with Claude Code, from initial project planning through implementation.
 
-## Starting a New Project
+## Starting a New Project or Major Feature
 
-For new projects or major features, follow the project planning workflow:
+For new projects or major improvements, follow the project planning workflow:
 
 ### The Planning Process
-1. **Create SPEC.md** - Claude writes technical specification from your requirements
-2. **Create ARCHITECTURE.md** - Claude designs system architecture and data models
-3. **Break down into tasks** - Claude creates detailed task list (TASKS.md)
-4. **Create GitHub issues** - Claude converts tasks to issues with workflow reminders
-5. **Start implementation** - Work through issues systematically
 
-### Example
+1. **Human provides initial input** - Free-format description: paragraphs, bullet points, keywords, even drawings
+2. **Claude creates SPEC.md** - Technical specification from your input
+3. **Human reviews & iterates** - This is crucial! Refine until the spec is right
+4. **Claude creates ARCHITECTURE.md** - System design based on approved spec
+5. **Human reviews & iterates** - Architecture decisions have long-term impact
+6. **Claude creates TASKS.md** - Detailed implementation breakdown
+7. **Human reviews tasks** - Ensure completeness and proper ordering
+8. **Claude creates GitHub issues** - Converts tasks to issues with workflow reminders
+9. **Start implementation** - Work through issues systematically
+
+**Key Point:** The higher-level the document, the more important iteration is. Spend time getting SPEC and ARCHITECTURE right - they guide everything else.
+
+### Example: Planning Cockpit APT
 ```
-You: We need a notification system for our app. Create a SPEC.md for this.
-Claude: [Creates detailed specification]
-You: Good. Now create ARCHITECTURE.md based on this spec.
-Claude: [Designs architecture]
-You: Break this down into implementation tasks.
-Claude: [Creates TASKS.md]
-You: Create GitHub issues from these tasks, include DEVELOPMENT_WORKFLOW.md reminders.
-Claude: [Creates issues #1-#8]
-You: Start with issue #1, follow the workflow.
+You: I need a web-based package manager for Cockpit. Like Raspberry Pi's
+     Add/Remove Software but for the web. Should handle APT packages,
+     show categories, search, install/remove with progress.
+     Target users are non-technical. Must work on Debian/Ubuntu.
+
+Claude: [Creates initial SPEC.md]
+
+You: Add requirements for safety checks - prevent removing essential packages.
+     Also needs to handle locked package manager gracefully.
+
+Claude: [Updates SPEC.md]
+
+You: Good spec. Now create ARCHITECTURE.md based on this.
+
+Claude: [Creates architecture with Python backend, React frontend]
+
+You: The backend should use python-apt directly, not shell commands.
+     Add a TypeScript API wrapper layer for type safety.
+
+Claude: [Updates ARCHITECTURE.md]
+
+You: Perfect. Break this into implementation tasks.
+
+Claude: [Creates TASKS.md with ~15 tasks]
+
+You: Tasks look good. Create GitHub issues with DEVELOPMENT_WORKFLOW.md reminders.
+
+Claude: [Creates issues #1-#15]
 ```
 
 See **@PROJECT_PLANNING_GUIDE.md** for the complete planning methodology.
