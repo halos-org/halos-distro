@@ -2,9 +2,35 @@
 
 **Last modified:** 2025-11-16
 
-This guide shows you how to work effectively with Claude Code, leveraging its strengths while avoiding common pitfalls.
+This guide shows you how to work effectively with Claude Code, from initial project planning through implementation.
 
-## The Workflow & Why It Matters
+## Starting a New Project
+
+For new projects or major features, follow the project planning workflow:
+
+### The Planning Process
+1. **Create SPEC.md** - Claude writes technical specification from your requirements
+2. **Create ARCHITECTURE.md** - Claude designs system architecture and data models
+3. **Break down into tasks** - Claude creates detailed task list (TASKS.md)
+4. **Create GitHub issues** - Claude converts tasks to issues with workflow reminders
+5. **Start implementation** - Work through issues systematically
+
+### Example
+```
+You: We need a notification system for our app. Create a SPEC.md for this.
+Claude: [Creates detailed specification]
+You: Good. Now create ARCHITECTURE.md based on this spec.
+Claude: [Designs architecture]
+You: Break this down into implementation tasks.
+Claude: [Creates TASKS.md]
+You: Create GitHub issues from these tasks, include DEVELOPMENT_WORKFLOW.md reminders.
+Claude: [Creates issues #1-#8]
+You: Start with issue #1, follow the workflow.
+```
+
+See **@PROJECT_PLANNING_GUIDE.md** for the complete planning methodology.
+
+## The Implementation Workflow & Why It Matters
 
 ### What Is The Workflow?
 The DEVELOPMENT_WORKFLOW.md defines a structured process:
@@ -23,7 +49,7 @@ The DEVELOPMENT_WORKFLOW.md defines a structured process:
 ### The Problem: Claude Forgets
 While Claude can read these workflows, **it often skips them unless reminded**. Without reminders, Claude tends to jump straight to coding, leading to bugs and rework.
 
-## Your Optimized Workflow
+## Day-to-Day Development Workflow
 
 ### Step 1: Let Claude Create the Issue
 Claude is excellent at writing the boilerplate. You just provide direction:
