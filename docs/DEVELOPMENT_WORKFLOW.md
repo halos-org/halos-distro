@@ -4,6 +4,8 @@
 
 This document defines the implementation workflows for Claude Code when working on HaLOS projects. Following these workflows ensures high-quality, well-tested implementations that match specifications.
 
+**IMPORTANT**: To help Claude Code adhere to these workflows, always include a reference to this document in GitHub issues.
+
 ## Core Principle: Think Before You Code
 
 **STOP** - Do not jump straight into coding. Follow the structured workflows below for every implementation task.

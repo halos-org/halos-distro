@@ -1,5 +1,7 @@
 # HaLOS Workspace - Agentic Coding Hub
 
+**LAST MODIFIED**: 2025-11-16
+
 **Document Purpose**: Central workspace for agentic coding with Claude Code and other AI assistants. This workspace provides full context across all HaLOS repositories for optimal AI-assisted development.
 
 ## 🎯 For Agentic Coding: Use This Workspace
