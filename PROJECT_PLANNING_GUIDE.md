@@ -105,12 +105,30 @@ After reviewing and refining TASKS.md:
 
 **Claude Code creates:** GitHub issues for each task
 
-**Issue format:**
+**IMPORTANT:** Use the issue templates in `.github/ISSUE_TEMPLATE/` when available. These templates ensure proper workflow guidance.
+
+**Issue format (if not using template):**
 ```
 Title: [Brief, clear description]
 
 Body:
 [Detailed implementation plan, specs, and approach]
+
+## Implementation Workflow
+**MANDATORY**: Follow DEVELOPMENT_WORKFLOW.md
+
+### Phase 1: Explore & Plan
+- Read relevant files WITHOUT coding
+- Use subagents for exploration
+- Plan with "think hard"
+- Reference /docs/SPEC.md and /docs/ARCHITECTURE.md
+
+### Phase 2: Test-Driven Development
+- Write tests FIRST
+- Verify tests fail
+- Commit tests
+- Implement until tests pass
+- Verify with subagents
 
 Implementation details:
 [Specific approach and technical decisions]
@@ -123,6 +141,8 @@ Acceptance criteria:
 - [ ] [Specific deliverable 1]
 - [ ] [Specific deliverable 2]
 - [ ] [Tests pass]
+- [ ] Matches SPEC.md requirements
+- [ ] Follows ARCHITECTURE.md patterns
 
 Caveats:
 [Any considerations, edge cases, or dependencies]
@@ -134,9 +154,74 @@ Caveats:
 - `priority:low` for nice-to-haves
 - Unlabeled issues are implicit medium priority
 
+**Creating Issues via CLI:**
+
+Since most issues are created with `gh` CLI, use one of these approaches:
+
+```bash
+# Option 1: Use the helper script (recommended)
+./create-issue feature "Add authentication" "Implement JWT auth"
+./create-issue bug "Fix login crash" "App crashes on empty password"
+
+# Option 2: Create with inline workflow reminder
+gh issue create \
+  --title "feat: Add authentication" \
+  --body "$(cat <<'EOF'
+## Description
+Implement JWT authentication
+
+## Implementation Workflow
+**MANDATORY**: Follow DEVELOPMENT_WORKFLOW.md
+
+### Phase 1: Explore & Plan
+- Read relevant files WITHOUT coding
+- Use subagents for exploration
+- Plan with "think hard"
+- Reference /docs/SPEC.md and /docs/ARCHITECTURE.md
+
+### Phase 2: Test-Driven Development
+- Write tests FIRST
+- Verify tests fail
+- Commit tests
+- Implement until tests pass
+- Verify with subagents
+
+## Acceptance Criteria
+- [ ] All tests pass
+- [ ] Matches SPEC.md requirements
+- [ ] Follows ARCHITECTURE.md patterns
+EOF
+)" \
+  --label "type:feature"
+
+# Option 3: Use template file
+gh issue create \
+  --title "feat: Add authentication" \
+  --body-file .github/issue-body-feature.md \
+  --label "type:feature"
+```
+
 **After issue creation:** Delete TASKS.md as it has served its purpose (or archive outside repository if historical reference is needed)
 
 ## Development Workflow
+
+**CRITICAL:** All development must follow the workflows defined in [DEVELOPMENT_WORKFLOW.md](DEVELOPMENT_WORKFLOW.md). This ensures high-quality implementations that match specifications.
+
+### Core Workflows
+
+1. **Explore-Plan-Code-Commit**: For all features and fixes
+   - Explore codebase WITHOUT coding
+   - Plan approach using "think hard"
+   - Implement following the plan
+   - Commit with meaningful messages
+
+2. **Test-Driven Development**: For testable features
+   - Write tests FIRST
+   - Verify tests fail
+   - Implement until tests pass
+   - Never modify tests to pass
+
+See [DEVELOPMENT_WORKFLOW.md](DEVELOPMENT_WORKFLOW.md) for detailed instructions.
 
 ### Typical Development Session
 
@@ -144,8 +229,13 @@ Caveats:
 Human: "Work on issue #42"
 Claude Code:
   - Reads issue from GitHub
-  - Implements the feature according to the plan in the issue
-  - Writes tests
+  - EXPLORES relevant files without coding (using subagents if needed)
+  - PLANS approach with "think hard"
+  - WRITES TESTS first (TDD workflow)
+  - Verifies tests fail
+  - Commits tests
+  - IMPLEMENTS until tests pass
+  - VERIFIES with subagents
   - Commits with message: "feat: implement [feature]\n\nImplements #42"
   - Creates PR if needed
 
