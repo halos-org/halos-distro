@@ -2,231 +2,122 @@
 
 **Last modified:** 2025-11-16
 
-This guide helps you leverage Claude Code effectively to develop faster while improving quality. **The key is reminding Claude to follow the workflow at the start of each task.**
+This guide shows you how to work effectively with Claude Code, leveraging its strengths while avoiding common pitfalls.
 
-## ⚠️ Reality Check: Claude Needs Reminders
+## The Workflow & Why It Matters
 
-While Claude can read AGENTS.md and find DEVELOPMENT_WORKFLOW.md, **it often forgets to follow the process unless explicitly reminded**. A simple reminder at the start saves pain later.
+### What Is The Workflow?
+The DEVELOPMENT_WORKFLOW.md defines a structured process:
+1. **Explore** - Understand existing code WITHOUT writing new code
+2. **Plan** - Think through the approach using "think hard"
+3. **Test** - Write tests FIRST (TDD)
+4. **Implement** - Code until tests pass
+5. **Verify** - Check edge cases and correctness
 
-## Quick Start: Your Development Session
+### Why This Workflow?
+- **Explore first** → Prevents breaking existing functionality
+- **Plan with thinking** → Better architecture, fewer rewrites
+- **Test first** → Clear target, prevents drift from requirements
+- **Verify** → Catches edge cases humans might miss
 
-### 1. First, Create an Issue WITH Workflow Reminder
+### The Problem: Claude Forgets
+While Claude can read these workflows, **it often skips them unless reminded**. Without reminders, Claude tends to jump straight to coding, leading to bugs and rework.
+
+## Your Optimized Workflow
+
+### Step 1: Let Claude Create the Issue
+Claude is excellent at writing the boilerplate. You just provide direction:
+
 ```
-You: Create a GitHub issue for adding user authentication.
-     Include a reminder to follow DEVELOPMENT_WORKFLOW.md during implementation.
-```
-
-Claude creates issue with workflow steps baked in.
-
-### 2. Start Work WITH Process Reminder
-```
-You: Work on issue #42. Remember to follow DEVELOPMENT_WORKFLOW.md -
-     explore first without coding, plan with "think hard", write tests first,
-     then implement.
-```
-
-This reminder ensures Claude actually:
-- Explores relevant code WITHOUT coding first
-- Plans the approach using "think hard"
-- Writes tests FIRST
-- Implements until tests pass
-- Commits with proper message
-
-Without the reminder, Claude often jumps straight to coding!
-
-### 3. It's Fine to Code Yourself
-```
-You: I'll write the authentication module myself, then you can add tests.
-You: I'm manually editing the config file, here's what I changed...
-You: I fixed the bug in auth.js, now update the tests to cover it.
+You: We need to add rate limiting to our API endpoints.
+     Create a GitHub issue for this, including the DEVELOPMENT_WORKFLOW.md reminder.
 ```
 
-Perfectly valid! Just tell Claude what you did so it stays in sync.
+Claude creates a complete issue with:
+- Detailed description
+- Implementation workflow steps
+- Test scenarios
+- Acceptance criteria
 
-## Real-World Examples
-
-### ✅ Starting a Feature (Right Way)
+### Step 2: Review & Start Work
 ```
-You: We need to add rate limiting to the API. Create an issue for this,
-     making sure to include the DEVELOPMENT_WORKFLOW.md requirements.
-
-Claude: [Creates issue #67 with workflow checklist]
-
-You: Great, now work on issue #67, following DEVELOPMENT_WORKFLOW.md -
-     explore first!
-
-Claude: [Explores existing middleware, plans approach, writes tests, implements]
+You: Good issue. Now work on it, following DEVELOPMENT_WORKFLOW.md - explore first!
 ```
 
-### ❌ Starting a Feature (Wrong Way)
+### Step 3: Provide Feedback
 ```
-You: Add rate limiting to the API
-
-Claude: [Immediately starts writing code, skips tests, misses edge cases]
-```
-
-### ✅ Bug Fix (Right Way)
-```
-You: Users report the search returns duplicates sometimes.
-     Create a bug issue and fix it following DEVELOPMENT_WORKFLOW.md,
-     especially write a test that reproduces the bug first.
-
-Claude: [Creates issue, writes failing test, then fixes bug properly]
+You: Use Redis for the rate limiting, not in-memory storage
+You: Add a bypass for admin users
+You: The rate limit should be configurable
 ```
 
-### ❌ Bug Fix (Wrong Way)
-```
-You: Fix the duplicate search results
+Claude adjusts immediately without you writing any code.
 
-Claude: [Jumps to a quick fix without understanding root cause]
-```
-
-## Common Scenarios
+## Key Examples
 
 ### Starting a New Feature
+**Right Way:**
 ```
-You: Create issue for adding user notifications. Include DEVELOPMENT_WORKFLOW.md reminder.
-You: Work on issue #[number], follow the workflow - explore first!
-```
-
-### Fixing a Bug
-```
-You: There's a crash when users input empty passwords.
-     Create a bug issue and fix it following DEVELOPMENT_WORKFLOW.md -
-     write a test that reproduces the bug first.
+You: We need pagination for all API endpoints. Create an issue with DEVELOPMENT_WORKFLOW.md reminder.
+Claude: [Creates detailed issue with workflow]
+You: Work on it, follow the workflow - explore first!
 ```
 
-### Code Review Feedback
+**Wrong Way:**
 ```
-You: PR #55 has review comments about security. Address them.
-     Follow DEVELOPMENT_WORKFLOW.md for any code changes.
-```
-
-### Refactoring
-```
-You: Refactor the auth module to use the new pattern we discussed.
-     Remember to follow DEVELOPMENT_WORKFLOW.md - especially keeping tests passing.
+You: Add pagination to the API
+Claude: [Jumps to coding, misses edge cases]
 ```
 
-### Mixed Human/AI Development
+### Bug Fixes
+**Right Way:**
 ```
-You: I'm writing the new payment module. You handle the tests and documentation.
-You: I edited the database schema. Update the models to match.
-```
-
-## Power Techniques
-
-### 1. Batch Operations
-```
-You: Fix all the ESLint warnings in the frontend
-You: Update all API endpoints to use the new error format
-You: Add logging to all database operations
+You: Users report duplicate search results. Create bug issue with workflow reminder,
+     then fix using TDD.
 ```
 
-### 2. Exploratory Questions
+**Wrong Way:**
 ```
-You: How does our caching work?
-You: Find all places where we handle user sessions
-You: What would break if we changed the User model?
+You: Fix the duplicate search results
 ```
 
-### 3. Architecture Decisions
+The difference? The right way ensures Claude writes a test that reproduces the bug first.
+
+### When You Write Code
 ```
-You: Should we use Redis or Memcached for sessions?
-```
-Claude Code will analyze trade-offs and recommend based on your codebase.
-
-### 4. Parallel Work
-```
-You: Work on issues #42, #43, and #44 in parallel
-```
-Claude Code can handle multiple non-conflicting tasks simultaneously.
-
-## What TO Do vs NOT to Do
-
-### ✅ DO: Remind About the Workflow
-**Good:** "Implement feature X following DEVELOPMENT_WORKFLOW.md"
-**Bad:** "Implement feature X" (Claude might skip the process)
-
-### ✅ DO: Write Code Yourself If You Want
-**Good:** "I wrote the auth module, here's what it does..."
-**Good:** "I'm editing config.json manually, I'll tell you when done"
-**Also Good:** "Add rate limiting to auth endpoints" (let Claude do it)
-
-### ❌ DON'T: Assume Claude Remembers
-**Bad:** Starting new task without mentioning the workflow
-**Good:** Always include "follow DEVELOPMENT_WORKFLOW.md" reminder
-
-### ❌ DON'T: Skip Issue Creation
-**Bad:** Jump straight to implementation
-**Good:** Create issue first with workflow reminder built in
-
-## Speed Hacks
-
-### 1. Use Issue Numbers
-Instead of explaining features, create issues and reference them:
-```
-You: Create issues for: auth refactor, add caching, fix performance.
-     Include DEVELOPMENT_WORKFLOW.md reminder in each.
-You: Work on all three issues, following the workflow
+You: I've written the payment module. Add comprehensive tests and documentation.
+You: I updated the database schema in schema.sql. Update the models to match.
 ```
 
-### 2. Reference Examples
-```
-You: Make the new endpoint like the one in user-controller.js
-You: Follow the same pattern as the existing tests
-```
+This is perfectly fine! Claude excels at the "boring" work like tests and docs.
 
-### 3. Batch Similar Tasks
-```
-You: Add input validation to all API endpoints
-You: Convert all class components to functional components
-```
+## Best Practices
 
-### 4. Trust the Process (When Reminded)
-The explore → plan → test → implement workflow prevents bugs - but only if Claude remembers to use it!
+### ✅ DO
+- **Let Claude create issues** - It's faster and includes all boilerplate
+- **Include workflow reminders** - "Follow DEVELOPMENT_WORKFLOW.md"
+- **Write code yourself when you want** - Just tell Claude what you did
+- **Batch similar tasks** - "Add validation to all endpoints"
+- **Reference examples** - "Like the pattern in user-controller.js"
 
-## Quality Guarantees (With Reminders)
+### ❌ DON'T
+- **Assume Claude remembers** - Always remind about the workflow
+- **Skip issue creation** - Issues with workflow reminders prevent problems
+- **Write boilerplate** - Let Claude handle the tedious parts
 
-When you remind Claude about DEVELOPMENT_WORKFLOW.md:
-- ✅ Writes tests before code (TDD)
-- ✅ Explores before coding (prevents mistakes)
+## What The Workflow Provides
+
+**With workflow reminders**, Claude:
+- ✅ Explores before coding (prevents breaking changes)
+- ✅ Writes tests first (clear target, no drift)
 - ✅ Plans with deep thinking (better architecture)
-- ✅ Verifies with subagents (catches edge cases)
-- ✅ References SPEC/ARCHITECTURE (stays aligned)
+- ✅ Verifies edge cases (fewer bugs)
 
-Without reminders, Claude may:
-- ❌ Jump straight to coding
-- ❌ Skip writing tests
-- ❌ Miss edge cases
-- ❌ Create brittle solutions
-
-## Real Session Example
-
-```
-You: We need to add pagination to all list endpoints
-
-Claude: [Creates issue #67 with details]
-        [Explores existing endpoints]
-        [Plans pagination approach]
-        [Writes tests for pagination]
-        [Implements pagination]
-        [Commits]
-
-You: Make the default page size configurable
-
-Claude: [Updates implementation immediately]
-
-You: Add cursor-based pagination as an option too
-
-Claude: [Adds feature while maintaining tests]
-
-You: Good, ship it
-
-Claude: [Creates PR with all changes]
-```
-
-Total time: 10 minutes for what would take hours manually.
+**Without reminders**, Claude often:
+- ❌ Jumps straight to coding
+- ❌ Skips tests
+- ❌ Misses edge cases
+- ❌ Creates quick but brittle solutions
 
 ## Advanced Patterns
 
@@ -261,39 +152,34 @@ You: The tests pass locally but fail in CI
 
 Claude Code investigates, identifies root causes, and fixes issues.
 
-## Remember
+## Quick Reference
 
-**Your role:** Provide direction, decisions, and **workflow reminders**
-**Claude Code's role:** Implementation, testing, and process (when reminded)
+### The Standard Flow
+1. **Describe need**: "We need [feature/fix]"
+2. **Claude creates issue**: "Create issue for this with DEVELOPMENT_WORKFLOW.md reminder"
+3. **Start work**: "Work on it, follow the workflow"
+4. **Provide feedback**: "Use Redis instead", "Add logging", etc.
+5. **Ship**: "Good, create PR"
 
-The workflow ensures quality doesn't suffer from speed - but only works when Claude remembers to follow it. A gentle reminder at the start of each task makes everything smoother.
+### The Magic Phrase
+When starting any task: **"Remember to follow DEVELOPMENT_WORKFLOW.md"**
 
-## Quick Reference Card
+This simple reminder dramatically improves quality.
 
-1. **Create issue:** "Create issue for [feature], include DEVELOPMENT_WORKFLOW.md reminder"
-2. **Start work:** "Work on issue #N, follow DEVELOPMENT_WORKFLOW.md"
-3. **Fix something:** "The [thing] should [behavior]"
-4. **Add feature:** "Add [feature], follow the workflow - explore first"
-5. **Fix bug:** "[Describe bug]. Fix it using TDD - test first"
-6. **Review:** "Address PR #N comments, follow workflow for changes"
-7. **Explore:** "How does [system] work?"
-8. **Refactor:** "Refactor [module], keep tests passing"
-9. **Your code:** "I wrote [what], now you [task]"
-10. **Done:** "Ship it" or "Create PR"
+### Common Commands
+- **New feature**: "Create issue for [feature] with workflow reminder"
+- **Bug fix**: "Users report [bug]. Create issue and fix using TDD"
+- **Your code**: "I wrote [module], add tests and docs"
+- **Exploration**: "How does [system] work?"
+- **Refactoring**: "Refactor [module] following the workflow"
 
-## The Magic Phrase
+## Summary
 
-When in doubt, just add: **"Remember to follow DEVELOPMENT_WORKFLOW.md"**
+**Let Claude handle the boilerplate** - Issue creation, test writing, documentation.
 
-This simple reminder dramatically improves the quality of Claude's work.
+**You provide direction** - What to build, architectural decisions, feedback.
 
-## Getting Started Today
-
-1. Pick an issue from your backlog
-2. Say: "Work on issue #N"
-3. Watch the workflow execute
-4. Provide feedback in natural language
-5. Ship faster with higher quality
+**Always remind about the workflow** - It's the difference between quick hacks and quality code.
 
 ---
 
