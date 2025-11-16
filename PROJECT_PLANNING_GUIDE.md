@@ -114,21 +114,16 @@ Title: [Brief, clear description]
 Body:
 [Detailed implementation plan, specs, and approach]
 
-## Implementation Workflow
-**MANDATORY**: Follow DEVELOPMENT_WORKFLOW.md
+## Implementation Requirements
 
-### Phase 1: Explore & Plan
-- Read relevant files WITHOUT coding
-- Use subagents for exploration
-- Plan with "think hard"
-- Reference /docs/SPEC.md and /docs/ARCHITECTURE.md
+**MANDATORY**: Follow `docs/IMPLEMENTATION_CHECKLIST.md` during implementation.
 
-### Phase 2: Test-Driven Development
-- Write tests FIRST
-- Verify tests fail
-- Commit tests
-- Implement until tests pass
-- Verify with subagents
+This includes:
+- Exploration phase WITHOUT coding
+- Planning with "think hard"
+- Test-Driven Development (write tests first)
+- Verification with subagents
+- References to SPEC.md and ARCHITECTURE.md
 
 Implementation details:
 [Specific approach and technical decisions]
@@ -156,35 +151,26 @@ Caveats:
 
 **Creating Issues via CLI:**
 
-Since most issues are created with `gh` CLI, use one of these approaches:
+Since most issues are created with `gh` CLI, always include the workflow reminder in the body:
 
 ```bash
-# Option 1: Use the helper script (recommended)
-./create-issue feature "Add authentication" "Implement JWT auth"
-./create-issue bug "Fix login crash" "App crashes on empty password"
-
-# Option 2: Create with inline workflow reminder
+# Create issue with workflow reminder
 gh issue create \
   --title "feat: Add authentication" \
   --body "$(cat <<'EOF'
 ## Description
 Implement JWT authentication
 
-## Implementation Workflow
-**MANDATORY**: Follow DEVELOPMENT_WORKFLOW.md
+## Implementation Requirements
 
-### Phase 1: Explore & Plan
-- Read relevant files WITHOUT coding
-- Use subagents for exploration
-- Plan with "think hard"
-- Reference /docs/SPEC.md and /docs/ARCHITECTURE.md
+**MANDATORY**: Follow `docs/IMPLEMENTATION_CHECKLIST.md` during implementation.
 
-### Phase 2: Test-Driven Development
-- Write tests FIRST
-- Verify tests fail
-- Commit tests
-- Implement until tests pass
-- Verify with subagents
+This includes:
+- Exploration phase WITHOUT coding
+- Planning with "think hard"
+- Test-Driven Development (write tests first)
+- Verification with subagents
+- References to SPEC.md and ARCHITECTURE.md
 
 ## Acceptance Criteria
 - [ ] All tests pass
@@ -193,13 +179,9 @@ Implement JWT authentication
 EOF
 )" \
   --label "type:feature"
-
-# Option 3: Use template file
-gh issue create \
-  --title "feat: Add authentication" \
-  --body-file .github/issue-body-feature.md \
-  --label "type:feature"
 ```
+
+**Important:** Each repository should have `docs/IMPLEMENTATION_CHECKLIST.md` and all issues must mandate following it during implementation.
 
 **After issue creation:** Delete TASKS.md as it has served its purpose (or archive outside repository if historical reference is needed)
 
