@@ -1,6 +1,10 @@
 # Implementation Checklist - Quick Reference
 
+**Last modified:** 2025-11-16
+
 **⚠️ STOP! Before implementing ANY feature, complete this checklist in order:**
+
+@DEVELOPMENT_WORKFLOW.md - Full workflow documentation
 
 ## □ Phase 1: EXPLORE (No Coding!)
 - [ ] Read GitHub issue completely

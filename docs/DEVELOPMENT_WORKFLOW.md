@@ -1,5 +1,7 @@
 # Development Workflow Guide for Claude Code
 
+**Last modified:** 2025-11-16
+
 This document defines the implementation workflows for Claude Code when working on HaLOS projects. Following these workflows ensures high-quality, well-tested implementations that match specifications.
 
 ## Core Principle: Think Before You Code

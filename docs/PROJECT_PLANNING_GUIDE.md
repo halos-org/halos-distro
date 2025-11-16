@@ -1,5 +1,7 @@
 # Claude Code Project Planning Guide
 
+**Last modified:** 2025-11-16
+
 This document describes the project planning and development workflow for Claude Code-driven projects backed by GitHub repositories.
 
 ## Philosophy
