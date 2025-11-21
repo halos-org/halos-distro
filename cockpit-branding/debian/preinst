@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e
+
+# Divert files from cockpit-ws package
+if [ "$1" = "install" ] || [ "$1" = "upgrade" ]; then
+    for file in branding.css logo.svg logo.png apple-touch-icon.png favicon.ico; do
+        dpkg-divert --package cockpit-branding-halos \
+            --divert /usr/share/cockpit/branding/debian/${file}.original \
+            --rename /usr/share/cockpit/branding/debian/${file} || true
+    done
+fi
+
+#DEBHELPER#
+
+exit 0

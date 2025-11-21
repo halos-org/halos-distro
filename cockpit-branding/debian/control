@@ -1,0 +1,16 @@
+Source: cockpit-branding-halos
+Section: admin
+Priority: optional
+Maintainer: Matti Airas <matti.airas@hatlabs.fi>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.6.2
+Homepage: https://github.com/hatlabs/halos-distro
+Rules-Requires-Root: no
+
+Package: cockpit-branding-halos
+Architecture: all
+Depends: ${misc:Depends},
+         cockpit
+Description: Custom HaLOS branding for Cockpit
+ This package provides the Hat Labs "HaLOS" branding for the Cockpit
+ web interface, including custom logo, CSS, and favicon.

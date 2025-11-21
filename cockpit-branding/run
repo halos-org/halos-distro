@@ -1,0 +1,141 @@
+#!/usr/bin/env bash
+#
+# usage: ./run command [argument ...]
+#
+# Commands for cockpit-branding development.
+#
+
+set -o nounset
+set -o pipefail
+set -o errexit
+
+# Change the current directory to the project root.
+PROJECT_ROOT=${0%/*}
+if [[ $0 != $PROJECT_ROOT && $PROJECT_ROOT != "" ]]; then
+  cd "$PROJECT_ROOT"
+fi
+readonly PROJECT_ROOT=$(pwd)
+
+# Store the absolute path to this script (useful for recursion).
+readonly SCRIPT="$PROJECT_ROOT/$(basename "$0")"
+
+################################################################################
+# Helper Functions
+
+function debtools {
+  #@ Run command in debtools container (Debian packaging)
+  docker compose -f docker/docker-compose.debtools.yml run --rm debtools "$@"
+}
+
+################################################################################
+# Debian Package Building Commands
+
+function build-deb {
+  #@ Build Debian package in debtools container
+  #@ Category: Debian
+  echo "📦 Building Debian package..."
+  # Build in debtools container which has all build dependencies pre-installed
+  # dpkg-buildpackage writes to .. by convention, so we move files back after
+  debtools \
+    bash -c "dpkg-buildpackage -b -uc -us && mv ../*.deb ../*.buildinfo ../*.changes ./ 2>/dev/null || true"
+
+  # List generated packages
+  echo "📦 Generated packages:"
+  ls -lh cockpit-branding-halos*.deb 2>/dev/null || echo "⚠️  No .deb files found"
+  echo "✅ Package build complete"
+}
+
+function lint-deb {
+  #@ Check package quality with lintian
+  #@ Category: Debian
+  echo "🔍 Running lintian..."
+  debtools lintian --info --display-info --pedantic
+}
+
+################################################################################
+# Docker Management Commands
+
+function build-debtools {
+  #@ Build Debian packaging Docker image
+  #@ Category: Docker
+  echo "🐳 Building Debian packaging Docker image..."
+  docker compose -f docker/docker-compose.debtools.yml build debtools
+  echo "✅ Docker image built successfully"
+}
+
+function clean-debtools {
+  #@ Remove Debian packaging Docker containers and images
+  #@ Category: Docker
+  echo "🧹 Cleaning Debian packaging Docker containers and images..."
+  docker compose -f docker/docker-compose.debtools.yml down --rmi all --volumes
+  echo "✅ Docker cleanup complete"
+}
+
+################################################################################
+# Utility Commands
+
+function clean {
+  #@ Clean build artifacts
+  #@ Category: Utility
+  echo "🧹 Cleaning build artifacts..."
+  rm -f *.deb *.buildinfo *.changes
+  echo "✅ Cleanup complete"
+}
+
+################################################################################
+# Help System
+
+function help {
+  #@ Show this help message
+  #@ Category: Core
+  echo "Cockpit Branding HaLOS - Development Commands"
+  echo "=============================================="
+  echo ""
+  echo "Available commands:"
+  echo ""
+
+  # Extract function definitions and their help comments
+  awk '/^function / {
+    fname = $2
+    sub(/[({].*/, "", fname)
+    getline
+    if ($0 ~ /#@/) {
+      desc = $0
+      sub(/.*#@ /, "", desc)
+      sub(/ *$/, "", desc)
+      getline
+      if ($0 ~ /#@ Category:/) {
+        cat = $0
+        sub(/.*Category: /, "", cat)
+        sub(/ *$/, "", cat)
+        if (!seen[cat]++) categories[++cat_count] = cat
+        commands[cat, ++cmd_count[cat]] = fname
+        descriptions[cat, cmd_count[cat]] = desc
+      }
+    }
+  }
+  END {
+    for (i = 1; i <= cat_count; i++) {
+      cat = categories[i]
+      print "\n" cat ":"
+      for (j = 1; j <= cmd_count[cat]; j++) {
+        printf "  %-25s %s\n", commands[cat, j], descriptions[cat, j]
+      }
+    }
+  }' "$0"
+
+  echo ""
+  echo "Usage: ./run <command> [arguments...]"
+  echo ""
+  echo "Quick start:"
+  echo "  1. ./run build-debtools    # Build packaging container (first time)"
+  echo "  2. ./run build-deb         # Build .deb package"
+  echo "  3. ./run lint-deb          # Check package quality"
+  echo ""
+}
+
+################################################################################
+# Commands end.
+
+TIMEFORMAT=$'\nTask completed in %3lR'
+time "${@:-help}"

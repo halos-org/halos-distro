@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+
+# Remove diversions when package is purged
+if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
+    for file in branding.css logo.svg logo.png apple-touch-icon.png favicon.ico; do
+        dpkg-divert --package cockpit-branding-halos \
+            --remove /usr/share/cockpit/branding/debian/${file} || true
+    done
+fi
+
+#DEBHELPER#
+
+exit 0

@@ -1,0 +1,23 @@
+/* HaLOS Cockpit Branding */
+
+/* Upper right logo on login screen */
+#badge {
+    inline-size: 100px;
+    block-size: 100px;
+    background-image: url("logo.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Brand text above login fields */
+#brand::before {
+    content: "HaLOS";
+    font-weight: bold;
+    letter-spacing: 0.05em;
+}
+
+/* Custom accent color for HaLOS */
+:root {
+    --ct-color-host-accent: #576679 !important;
+}

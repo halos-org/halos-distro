@@ -1,0 +1,9 @@
+# Build artifacts
+*.deb
+*.buildinfo
+*.changes
+debian/.debhelper/
+debian/cockpit-branding-halos/
+debian/debhelper-build-stamp
+debian/files
+debian/*.substvars

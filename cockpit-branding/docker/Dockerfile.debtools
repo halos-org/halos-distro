@@ -1,0 +1,16 @@
+FROM debian:trixie
+
+# Install Debian packaging tools
+RUN apt-get update && apt-get install -y \
+    debhelper \
+    build-essential \
+    fakeroot \
+    devscripts \
+    lintian \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /workspace
+
+# Default command
+CMD ["/bin/bash"]
