@@ -45,7 +45,7 @@ declare -A REPOS=(
 ################################################################################
 # Repository Management Commands
 
-function repos:clone {
+function clone-repos {
   #@ Clone any missing repositories
   #@ Category: Repository Management
   echo "🔄 Checking repositories..."
@@ -74,7 +74,7 @@ function repos:clone {
   echo "📊 Summary: $cloned cloned, $skipped skipped"
 }
 
-function repos:pull-all-main {
+function pull-all-main {
   #@ Pull latest changes from main branches for all repos
   #@ Category: Repository Management
   echo "🔄 Updating all repositories..."
@@ -110,7 +110,7 @@ function repos:pull-all-main {
   fi
 }
 
-function repos:status {
+function status {
   #@ Show git status for all repositories
   #@ Category: Repository Management
   echo "📊 Repository status:"
