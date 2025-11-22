@@ -1,14 +1,14 @@
 # Halos Raspberry Pi OS Distribution
 
-Halos (Hat Labs Operating System) is a custom Raspberry Pi OS distribution designed to help end-users run and maintain both Hat Labs and generic Raspberry Pi hardware with ease. Built on Raspberry Pi OS Lite (arm64, Trixie), Halos adds web-based management tools, hardware monitoring, and containerized services.
-
 > **⚠️ IMPORTANT: Work in Progress**
 >
-> Halos is under active development and should be considered **beta software**. Major components, architectures, and features are subject to change without notice. Use in production environments at your own risk. Feedback and bug reports are welcome!
+> Halos is under active development and is not feature complete. Major features are still missing. Use in production environments at your own risk. Feedback and bug reports are welcome!
 
-## Vision: Browser-Based, Unified Administration
+Halos (Hat Labs Operating System) is a containers-first Raspberry Pi distribution with web-based management. Control everything from your browser: browse an app store, install containerized services, and manage your system. No terminal required (YMMV). Works with any Raspberry Pi 4/5 or Hat Labs HALPI2.
 
-Halos is evolving toward a **unified, browser-based administration experience** through Cockpit. The goal is to consolidate all system management—packages, containers, network configuration—into a single, cohesive web interface using standard Debian tools (APT, systemd, NetworkManager).
+## Browser-Based Administration
+
+Halos provides a **unified, browser-based administration experience** through Cockpit. All system management—packages, containers, network configuration—is available from a single web interface using standard Debian tools (APT, systemd, NetworkManager).
 
 ### Why Browser-Based?
 
@@ -20,41 +20,21 @@ Halos is evolving toward a **unified, browser-based administration experience** 
 
 **But Still Flexible**: Desktop environment and SSH access remain available for those who prefer them.
 
-### What This Means
-
-**Current State**: Halos uses two separate web interfaces—Cockpit for system administration and Runtipi for container management. This works but requires learning and navigating two different tools.
-
-**Future State**: All management through Cockpit, with specialized modules for different tasks:
-- **cockpit-apt**: Full-featured APT package manager (already available)
-- **Container Store**: Browse and install containerized apps as native Debian packages
-- **Container Config**: Separate Cockpit module to configure installed container apps
-- **Enhanced Network**: WiFi configuration and network management improvements
-
 ### Key Benefits
 
-- **Browser-Based**: Manage everything from any device on your network—no desktop or terminal needed
-- **Single Interface**: One place for all administration tasks
+- **Single Interface**: One place for all administration tasks via Cockpit
+- **Container Store**: Browse and install containerized apps as native Debian packages
 - **Standard Tools**: Built on APT, systemd, and other proven Debian technologies
 - **Native Packages**: Container apps as .deb packages, managed like any other software
 - **Extensible Stores**: Multiple "stores" (marine apps, development tools, home automation) that filter and present relevant packages
 - **Vanilla Compatible**: Works on standard Raspberry Pi OS with just `apt.hatlabs.fi` repo added
-- **Upstream Friendly**: cockpit-apt designed to be attractive for inclusion in standard Debian/Ubuntu distributions
-
-### Timeline
-
-This transition is happening in phases:
-1. **Phase 1** (In Progress): Container store foundation—tooling, packaging, and cockpit-apt enhancements
-2. **Phase 2** (Planned): Container configuration UI for managing installed apps
-3. **Phase 3** (Future): Expanded app catalog, WiFi configuration, converters for existing app stores
-
-For detailed planning, see [META-PLANNING.md](META-PLANNING.md).
 
 ## What is Halos?
 
 Halos transforms your Raspberry Pi into a managed server platform with:
 
 - **Web-based system administration** via Cockpit (port 9090)
-- **Docker container management** via Runtipi (port 80/443) with app store
+- **Container app store** via cockpit-apt with one-click installation
 - **Optional marine software stack** (Signal K, InfluxDB, Grafana) for boats
 - **HALPI2 hardware support** for CAN bus, RS-485, I2C interfaces and power management
 
@@ -69,21 +49,21 @@ Halos transforms your Raspberry Pi into a managed server platform with:
 Halos comes in multiple variants to suit different hardware and use cases:
 
 ### Hardware Platform
-- **HALPI2 variants**: Include drivers for Hat Labs HALPI2 hardware (CAN, RS-485, I2C)
+- **HALPI2 variants**: Include drivers for Hat Labs HALPI2 hardware (CAN, RS-485, power management)
 - **RPI variants**: For generic Raspberry Pi 4/5 (no HALPI2-specific drivers)
 
 ### Desktop Environment
-- **Headless** (recommended): No desktop GUI, access via web interfaces only
+- **Headless**: No desktop GUI, access via web interfaces only
 - **Desktop**: Includes XFCE desktop environment
 
 ### Software Stack
-- **Standard**: Cockpit + Runtipi web management
-- **Marine**: Adds a Marine App Store for Runtipi with a number of containerized marine applications
+- **Standard**: Cockpit web management with container store
+- **Marine**: Adds the Marine App Store with containerized marine applications
 
 ### Available Images
 
-| Image Name | Hardware | Desktop | Marine Stack |
-|------------|----------|---------|--------------|
+| Image Name | Hardware | Desktop | Marine Apps |
+|------------|----------|---------|-------------|
 | `Halos-HALPI2` | HALPI2 | No | No |
 | `Halos-Desktop-HALPI2` | HALPI2 | Yes | No |
 | `Halos-Marine-HALPI2` | HALPI2 | No | Yes |
@@ -128,257 +108,111 @@ For generic Raspberry Pi, follow these steps:
 
 **Important:** Change the default password immediately after first login!
 
+## Installing on Vanilla Raspberry Pi OS
+
+Already running Raspberry Pi OS Trixie? You can install the Halos software stack without reflashing.
+
+### 1. Add the Hat Labs Repository
+
+```bash
+# Import the GPG key
+curl -fsSL https://apt.hatlabs.fi/hat-labs-apt-key.asc | sudo gpg --dearmor -o /usr/share/keyrings/hatlabs.gpg
+
+# Add the repository
+echo "deb [signed-by=/usr/share/keyrings/hatlabs.gpg] https://apt.hatlabs.fi trixie-stable main" | sudo tee /etc/apt/sources.list.d/hatlabs.list
+
+# Update package lists
+sudo apt update
+```
+
+### 2. Install Halos
+
+Choose the variant that fits your needs:
+
+```bash
+# Base system (Cockpit + container store)
+sudo apt install halos
+
+# Marine variant (includes marine app store and Signal K)
+sudo apt install halos-marine
+```
+
+The installation will set up Cockpit and all dependencies. Access the web interface at `https://<your-pi-ip>:9090/`.
+
 ## Using Halos
 
-### Web Management Interfaces
+### Web Management Interface
 
-Access these services from any browser on your network:
+Access Cockpit from any browser on your network at [`https://halos.local:9090/`](https://halos.local:9090/):
 
-- **Cockpit** ([`https://halos.local:9090/`](https://halos.local:9090/)): System administration
-  - Terminal access
-  - System resource monitoring
-  - Service management
-  - Software updates
-  - User management
+- **Overview**: System resource monitoring and status
+- **Software**: Install and manage packages, including container apps
+- **Terminal**: Command-line access without SSH
+- **Services**: Manage systemd services
+- **Logs**: View system and application logs
+- **Users**: User account management
 
-- **Runtipi** ([`http://halos.local`](http://halos.local)): Container management
-  - Browse and install apps from the app store
-  - Manage running containers
-  - Configure application settings
+### Installing Container Apps
 
-### Marine Stack
+1. Open Cockpit and navigate to **Software**
+2. Select a store filter (e.g., "Marine Apps") to browse available applications
+3. Click on an app to view details and install
+4. Installed apps run as systemd services and start automatically
 
-Apps need to be installed first from the Runtipi Marine App Store.
+### Marine Apps
+
+Marine variants include the Marine App Store with applications such as:
 
 - **Signal K** ([`http://halos.local:3000`](http://halos.local:3000)): Marine data server and API
 - **InfluxDB** ([`http://halos.local:8086`](http://halos.local:8086)): Time-series database for marine data
 - **Grafana** ([`http://halos.local:3001`](http://halos.local:3001)): Data visualization and dashboards
 - **AvNav** ([`http://halos.local:3011`](http://halos.local:3011)): Marine navigation software
-- **OpenCPN** ([`http://halos.local:3021`](http://halos.local:3021)): Chartplotter and navigation software
+- **OpenCPN** ([`http://halos.local:3002`](http://halos.local:3002)): Chartplotter and navigation software
+
+Install these from the Marine Apps store in Cockpit.
 
 ### Terminal Access
 
 - Via Cockpit: Click "Terminal" in the left sidebar
-- Via SSH: `ssh pi@halos.local` (if enabled in Cockpit)
+- Via SSH: `ssh pi@halos.local`
 
 ## Known Limitations
 
 These features are planned but not yet implemented:
 
-- **Pre-installed Runtipi apps**: Waiting for upstream Runtipi to add support for pre-installing apps in the image. Currently, you must manually install apps after first boot.
-
 - **WiFi configuration in Cockpit**: Cockpit's network module doesn't yet support WiFi setup.
   - **Workaround**: Access the Cockpit terminal and run `sudo nmtui` to configure WiFi using NetworkManager's text interface.
 
-- **Unified dashboard**: A user-friendly landing page showing system status and quick links to installed apps is planned but not yet available. Currently, you need to bookmark or remember the different service ports.
+- **Container app configuration UI**: A dedicated interface for configuring installed container apps is planned. Currently, configuration requires editing files manually.
 
-## Development Roadmap
+- **Unified dashboard**: A landing page showing system status and quick links to installed apps is planned but not yet available.
 
-Halos is transitioning to a unified Cockpit-based administration experience. This roadmap outlines the planned phases and current status.
+## Roadmap
 
-### Phase 1: Container Store Foundation (In Progress)
+Halos development continues with these planned improvements:
 
-**Goal**: Establish container app packaging and store infrastructure
+### Current Focus: Container Configuration UI
 
-**Status**: [In Progress - Track on GitHub](https://github.com/hatlabs/halos-distro/issues/12)
+A new Cockpit module for managing installed container apps:
+- List installed apps with status indicators
+- Configuration editor for app settings
+- Service control (start/stop/restart)
+- Log viewer integration
 
-**Components**:
-- [container-packaging-tools](https://github.com/hatlabs/container-packaging-tools) - Tool for generating .deb packages from container app definitions ([#15](https://github.com/hatlabs/halos-distro/issues/15))
-- [halos-marine-containers](https://github.com/hatlabs/halos-marine-containers) - Marine app definitions and store configuration ([#14](https://github.com/hatlabs/halos-distro/issues/14))
-- [cockpit-apt](https://github.com/hatlabs/cockpit-apt) - Store filtering and repository management UI ([#13](https://github.com/hatlabs/halos-distro/issues/13))
+### Planned Features
 
-**Deliverables**:
-- Tool to generate container packages from simple app definitions
-- 3-5 working marine container apps as proof of concept
-- Store filter working in cockpit-apt UI
-- Users can install/remove container apps via cockpit-apt
+- **Expanded app catalog**: More marine and general-purpose container apps
+- **Dashboard integration**: Unified landing page with Homarr
+- **Reverse proxy**: Clean URLs via Traefik (e.g., `halos.local/signalk` instead of `:3000`)
+- **WiFi configuration**: Access point setup, saved networks, QR code sharing
 
-**Key Features**:
-- Container apps packaged as standard Debian .deb files
-- systemd manages container lifecycle (no Docker orchestration)
-- "Marine Apps" store filter in cockpit-apt
-- Repository filtering for vanilla Raspberry Pi OS users too
-- Each app has metadata, configuration schema, and systemd service
-
-**Success Criteria**:
-- User adds apt.hatlabs.fi repository
-- Installs cockpit-apt and marine-container-store packages
-- Sees marine apps in filtered store view
-- Installs Signal K or OpenCPN successfully
-- systemd service starts automatically, container runs
-
-**Documentation**:
-- [META-PLANNING.md](META-PLANNING.md) - Overall project planning
-- [docs/CATEGORIZATION_STRATEGY.md](docs/CATEGORIZATION_STRATEGY.md) - Tag-based categorization approach
-- [halos-marine-containers/docs/DESIGN.md](halos-marine-containers/docs/DESIGN.md) - App and store definition format
-- [container-packaging-tools/docs/DESIGN.md](container-packaging-tools/docs/DESIGN.md) - Packaging tool design
-- [cockpit-apt/docs/CONTAINER_STORE_DESIGN.md](cockpit-apt/docs/CONTAINER_STORE_DESIGN.md) - UI implementation
-
-### Phase 2: Container Configuration (Planned)
-
-**Goal**: Web UI for configuring installed container apps
-
-**Status**: Planning (starts after Phase 1 complete)
-
-**Components**:
-- cockpit-container-config - New Cockpit module for container app management
-
-**Deliverables**:
-- List view of installed container apps with status
-- Configuration editor (generated from config.yml or simple text editor)
-- Service control (start/stop/restart via systemd)
-- Real-time log viewer (journalctl integration)
-- Quick links to application web UIs
-
-**Key Features**:
-- Separate Cockpit module (appears in left sidebar like Services, Logs, Terminal)
-- Configure apps via web interface (no file editing required)
-- Visual service management with status indicators
-- Troubleshooting with integrated log viewer
-- QR codes for sharing app URLs
-
-**Documentation**:
-- [docs/CONTAINER_CONFIG_DESIGN.md](docs/CONTAINER_CONFIG_DESIGN.md) - High-level design concept
-
-### Phase 3: Expansion & Polish (Future)
-
-**Goal**: More apps, converters, additional stores, and WiFi configuration
-
-**Status**: Concept (after Phase 2)
-
-**Deliverables**:
-- 20+ marine container apps available
-- Converter tools (import from CasaOS, Runtipi, other app stores)
-- Additional store categories (development tools, home automation)
-- Enhanced WiFi configuration in Cockpit (access point, saved networks, QR codes)
-
-**Key Features**:
-- Comprehensive marine app catalog
-- Automated app store imports
-- Multi-store support (marine, dev, home automation)
-- WiFi access point setup with QR code generation
-- Marina WiFi connection management
-- Bridge mode (share marina WiFi with boat network)
-
-**Documentation**:
-- [docs/WIFI_CONFIG_DESIGN.md](docs/WIFI_CONFIG_DESIGN.md) - WiFi configuration concept
-
-### Phase 3.5: Dashboard Integration (Future)
-
-**Goal**: Unified landing page with Homarr dashboard
-
-**Status**: Design Complete (after Phase 3)
-
-**Deliverables**:
-- Homarr packaged as `homarr-container`
-- Rust adapter service (`homarr-container-adapter`) for auto-discovery
-- Auto-discovery of installed apps via Docker labels
-- Pre-installed in HaLOS images
-
-**Key Features**:
-- Default landing page at `http://halos.local/`
-- Auto-discovery of newly installed container apps
-- User-customizable dashboard (add/remove/reorder apps)
-- Quick access to Cockpit and all installed apps
-- System status widgets (CPU, memory, disk)
-- Mobile-friendly responsive design
-
-**Documentation**:
-- [docs/HOMARR_INTEGRATION_DESIGN.md](docs/HOMARR_INTEGRATION_DESIGN.md) - Homarr integration design
-
-### Phase 4: Reverse Proxy Integration (Future)
-
-**Goal**: Clean URLs with Traefik reverse proxy
-
-**Status**: Design Complete (after Phase 3.5)
-
-**Deliverables**:
-- Traefik packaged as `halos-traefik-container`
-- Auto-configuration via Docker labels (Runtipi style)
-- HTTPS with self-signed or Let's Encrypt certificates
-- Pre-installed in HaLOS images
-
-**Key Features**:
-- Clean URLs instead of random ports (e.g., `halos.local/signalk` vs `:3000`)
-- Optional integration - apps work with direct ports as fallback
-- User choice per app (Traefik route, direct port, or both)
-- Automatic HTTPS certificate management
-- Integration with Homarr (dashboard shows proxy URLs)
-- Traefik labels auto-generated in app packages
-
-**Documentation**:
-- [docs/TRAEFIK_INTEGRATION_DESIGN.md](docs/TRAEFIK_INTEGRATION_DESIGN.md) - Traefik integration design
-
-**Open Questions** (TBD during implementation):
-- URL scheme: Path-based (`halos.local/app`) vs subdomain-based (`app.halos.local`)?
-- Default HTTPS always or HTTP by default?
-
-### Phase 5: Upstream & Community (Long-term)
-
-**Goal**: Upstream contributions and community maintenance
-
-**Status**: Long-term vision
-
-**Deliverables**:
-- Submit cockpit-apt to Debian/Ubuntu for inclusion
-- Public documentation for creating custom stores
-- Contribution guidelines for community apps
-- Community moderation workflows
-
-**Key Features**:
-- cockpit-apt available in standard Debian/Ubuntu repositories
-- Easy for other projects to create their own app stores
-- Community-maintained app catalog
-- Quality assurance and security review processes
-
-### Timeline Overview
-
-```
-2025 Q4: Phase 1 - Container Store Foundation
-├─ container-packaging-tools MVP
-├─ halos-marine-containers (3-5 apps)
-└─ cockpit-apt store features
-
-2026 Q1: Phase 2 - Container Configuration
-└─ cockpit-container-config module
-
-2026 Q2: Phase 3 - Expansion & Polish
-├─ Expanded app catalog (20+ apps)
-├─ Additional stores
-└─ WiFi configuration
-
-2026 Q3: Phase 3.5 - Dashboard Integration
-├─ Homarr dashboard landing page
-├─ Auto-discovery adapter (Rust)
-└─ Default page at http://halos.local/
-
-2026 Q4: Phase 4 - Reverse Proxy
-├─ Traefik integration
-├─ Clean URLs (no ports)
-└─ HTTPS with Let's Encrypt
-
-2027+: Phase 5 - Upstream & Community
-└─ Debian/Ubuntu submission
-```
-
-**Note**: Timelines are estimates and subject to change based on development progress and community feedback.
+For detailed planning documents, see the `docs/` folder and [META-PLANNING.md](META-PLANNING.md).
 
 ### Get Involved
 
-- **Follow Progress**: [GitHub Issues](https://github.com/hatlabs/halos-distro/issues) and [Milestones](https://github.com/hatlabs/halos-distro/milestones)
+- **Follow Progress**: [GitHub Issues](https://github.com/hatlabs/halos-distro/issues)
 - **Provide Feedback**: Open issues with feature requests or bug reports
 - **Contribute**: See individual component repositories for contribution guidelines
-- **Test**: Try Phase 1 features as they become available and report issues
-
-### Runtipi Replacement
-
-Runtipi will be replaced (not migrated) once equivalent functionality is available:
-- **Phase 1-2**: Container apps via cockpit-apt + configuration UI
-- **Phase 3.5**: Homarr replaces Runtipi dashboard
-- **Phase 4**: Traefik replaces Runtipi's reverse proxy
-- Runtipi removed from HaLOS images after Phase 4 complete
-
-Users installing HaLOS during the transition will have Runtipi available until the new stack is ready.
 
 ## Development
 
@@ -387,11 +221,12 @@ This repository acts as a workspace manager for all the components that make up 
 ### Repository Layout
 
 - **halos-pi-gen/** - Custom Raspberry Pi image builder based on pi-gen
-- **runtipi-marine-app-store/** - Custom marine app store for Runtipi
-- **runtipi-docker-service/** - Runtipi Debian package
+- **cockpit-apt/** - Cockpit package manager with store filtering
+- **cockpit-branding-halos/** - Halos branding for Cockpit
+- **container-packaging-tools/** - Tool for generating container .deb packages
+- **halos-marine-containers/** - Marine app definitions and store configuration
+- **halos-metapackages/** - Halos and Halos-Marine metapackages
 - **apt.hatlabs.fi/** - Custom APT repository for Halos packages
-- **avnav-docker/** - AVNav marine navigation software
-- **opencpn-docker/** - OpenCPN marine chartplotter
 
 Each repository is independently managed. The `./run` script provides convenience commands for cloning and updating all repositories at once.
 
@@ -399,20 +234,20 @@ Each repository is independently managed. The `./run` script provides convenienc
 
 ```bash
 # Clone all component repositories
-./run repos:clone
+./run clone-repos
 
 # Update all repositories to latest
-./run repos:pull-all-main
+./run pull-all-main
 
 # Check status of all repositories
-./run repos:status
+./run status
 
-# Build an image (requires Docker and act)
+# Build an image (requires Docker)
 cd halos-pi-gen
 ./run docker:build "Halos-Marine-HALPI2"
 ```
 
-Each repository has its own `CLAUDE.md` with detailed development documentation.
+Each repository has its own `AGENTS.md` with detailed development documentation.
 
 ## Contributing
 
