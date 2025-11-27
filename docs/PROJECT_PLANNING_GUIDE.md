@@ -18,6 +18,17 @@ This document describes the project planning and development workflow for Claude
   - Branch targeting criteria: `main` (default branch)
   - Require a pull request before merging
   - Block force pushes
+- Configure repository labels:
+  - **Type labels:**
+    - `type:bug` - Something is broken or incorrect
+    - `type:feature` - New functionality to add
+    - `type:enhancement` - Improve existing functionality
+    - `type:documentation` - Documentation improvements (optional)
+    - `type:question` - User needs help or clarification
+  - **Priority labels:**
+    - `priority:high` - Critical bugs blocking users, core MVP features (use sparingly)
+    - `priority:low` - Nice-to-haves, polish, optimizations
+    - (no label) - Implicit medium priority
 
 
 ## Project Structure
