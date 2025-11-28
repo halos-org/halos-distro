@@ -1,0 +1,18 @@
+# Build artifacts
+cockpit-src/
+*.deb
+*.buildinfo
+*.changes
+
+# Debian build directories
+debian/cockpit-networkmanager-halos/
+debian/.debhelper/
+debian/files
+debian/debhelper-build-stamp
+debian/*.substvars
+debian/*.debhelper.log
+
+# Backup files
+*~
+*.swp
+*.swo

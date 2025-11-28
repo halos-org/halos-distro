@@ -1,0 +1,9 @@
+services:
+  debtools:
+    build:
+      context: .
+      dockerfile: Dockerfile.debtools
+    volumes:
+      - ../:/workspace
+    working_dir: /workspace
+    command: /bin/bash

@@ -1,0 +1,37 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+export COCKPIT_REPO := https://github.com/hatlabs/cockpit.git
+export COCKPIT_BRANCH := wifi
+export COCKPIT_DIR := $(CURDIR)/cockpit-src
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+	rm -rf $(COCKPIT_DIR)
+	dh_auto_clean
+
+override_dh_auto_build:
+	# Clone cockpit repository from wifi branch
+	if [ ! -d "$(COCKPIT_DIR)" ]; then \
+		git clone --depth 1 --branch $(COCKPIT_BRANCH) $(COCKPIT_REPO) $(COCKPIT_DIR); \
+	fi
+
+	# Install dependencies and build networkmanager module
+	cd $(COCKPIT_DIR) && npm install
+	cd $(COCKPIT_DIR) && ./build.js networkmanager
+
+override_dh_auto_install:
+	# Create Cockpit module directory
+	mkdir -p debian/cockpit-networkmanager-halos/usr/share/cockpit/networkmanager
+
+	# Copy built networkmanager module
+	cp -r $(COCKPIT_DIR)/dist/networkmanager/* \
+		debian/cockpit-networkmanager-halos/usr/share/cockpit/networkmanager/
+
+override_dh_auto_test:
+	# Skip tests for now (will be added in Issue #10)
+	@echo "Skipping tests"

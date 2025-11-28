@@ -1,0 +1,30 @@
+Source: cockpit-networkmanager-halos
+Section: admin
+Priority: optional
+Maintainer: Hat Labs <info@hatlabs.fi>
+Build-Depends: debhelper-compat (= 13),
+               nodejs,
+               npm,
+               git
+Standards-Version: 4.6.0
+Homepage: https://github.com/hatlabs/cockpit
+
+Package: cockpit-networkmanager-halos
+Architecture: all
+Depends: ${misc:Depends},
+         cockpit (>= 276),
+         network-manager (>= 1.20)
+Conflicts: cockpit-networkmanager
+Replaces: cockpit-networkmanager
+Provides: cockpit-networkmanager
+Description: Cockpit NetworkManager module with WiFi support for HaLOS
+ This package provides the NetworkManager integration for Cockpit with
+ comprehensive WiFi configuration support including:
+ .
+  - WiFi network scanning and connection management
+  - WPA2/WPA3 Personal authentication
+  - Access Point (hotspot) mode configuration
+  - Simultaneous AP + Client mode support
+ .
+ This is a HaLOS-specific build from the hatlabs/cockpit fork (wifi branch)
+ with WiFi features under development for potential upstream contribution.

@@ -1,0 +1,7 @@
+cockpit-networkmanager-halos (0.1.0) unstable; urgency=medium
+
+  * Initial release with infrastructure setup
+  * Package built from hatlabs/cockpit wifi branch
+  * WiFi features under development (Issue #1-#10)
+
+ -- Hat Labs <info@hatlabs.fi>  Thu, 28 Nov 2024 20:00:00 +0200

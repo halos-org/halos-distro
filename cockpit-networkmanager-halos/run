@@ -1,0 +1,109 @@
+#!/usr/bin/env bash
+#
+# usage: ./run command [argument ...]
+#
+# Commands for cockpit-networkmanager-halos development.
+#
+
+set -o nounset
+set -o pipefail
+set -o errexit
+
+# Change the current directory to the project root.
+PROJECT_ROOT=${0%/*}
+if [[ $0 != $PROJECT_ROOT && $PROJECT_ROOT != "" ]]; then
+  cd "$PROJECT_ROOT"
+fi
+readonly PROJECT_ROOT=$(pwd)
+
+################################################################################
+# Helper Functions
+
+function debtools {
+  #@ Run command in debtools container
+  docker compose -f docker/docker-compose.debtools.yml run --rm debtools "$@"
+}
+
+################################################################################
+# Commands
+
+function build {
+  #@ Build Debian package in Docker container
+  echo "📦 Building Debian package..."
+
+  # Build in debtools container
+  debtools bash -c "dpkg-buildpackage -b -uc -us && mv ../*.deb ../*.buildinfo ../*.changes ./ 2>/dev/null || true"
+
+  # List generated packages
+  echo ""
+  echo "📦 Generated packages:"
+  ls -lh cockpit-networkmanager-halos*.deb 2>/dev/null || echo "⚠️  No .deb files found"
+  echo "✅ Package build complete"
+}
+
+function deploy {
+  #@ Deploy package to test device
+  ./scripts/deploy.sh
+}
+
+function test-cycle {
+  #@ Full build + deploy cycle
+  build
+  deploy
+}
+
+function docker-build {
+  #@ Build Docker image
+  echo "🐳 Building Docker image..."
+  docker compose -f docker/docker-compose.debtools.yml build debtools
+  echo "✅ Docker image built"
+}
+
+function clean {
+  #@ Remove build artifacts
+  echo "🧹 Cleaning build artifacts..."
+  rm -rf cockpit-src debian/cockpit-networkmanager-halos debian/.debhelper debian/files debian/debhelper-build-stamp
+  rm -f cockpit-networkmanager-halos_*.deb cockpit-networkmanager-halos_*.buildinfo cockpit-networkmanager-halos_*.changes
+  echo "✅ Clean complete"
+}
+
+function help {
+  #@ Show available commands
+  echo "cockpit-networkmanager-halos development commands:"
+  echo ""
+  echo "Usage: ./run <command>"
+  echo ""
+  echo "Commands:"
+  grep -E "^function [a-z-]+ {$" "$0" | sed 's/function /  /; s/ {$//' | sort
+  echo ""
+  echo "Examples:"
+  echo "  ./run build        - Build package in Docker"
+  echo "  ./run deploy       - Deploy to test device"
+  echo "  ./run test-cycle   - Full build + deploy"
+}
+
+################################################################################
+# Main
+
+# If no command specified, show help
+if [ $# -eq 0 ]; then
+  help
+  exit 0
+fi
+
+# Get command
+COMMAND=$1
+shift
+
+# Run command
+case "$COMMAND" in
+  build|deploy|test-cycle|docker-build|clean|help)
+    "$COMMAND" "$@"
+    ;;
+  *)
+    echo "Unknown command: $COMMAND"
+    echo ""
+    help
+    exit 1
+    ;;
+esac
