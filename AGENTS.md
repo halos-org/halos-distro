@@ -1,6 +1,6 @@
 # HaLOS Workspace - Agentic Coding Hub
 
-**LAST MODIFIED**: 2025-12-17
+**LAST MODIFIED**: 2025-12-29
 
 **Document Purpose**: Central workspace for agentic coding with Claude Code and other AI assistants. This workspace provides full context across all HaLOS repositories for optimal AI-assisted development.
 
@@ -14,6 +14,28 @@
 - `docs/DEVELOPMENT_WORKFLOW.md` - Detailed Claude Code workflows
 - `docs/PROJECT_PLANNING_GUIDE.md` - Project planning process
 - `docs/HOSTNAME_POLICY.md` - Policy on hard-coded hostname references
+
+## ⛔ Test Device Policy
+
+**NEVER build on test devices.** Test devices (e.g., `halos.local`) are for **testing only**, not for compiling code.
+
+All build operations MUST be performed locally on the development machine using the `./run` script commands provided by each repository. For example:
+- `./run build` - Build debug binary
+- `./run build-release` - Build release binary
+- `./run test` - Run tests
+
+For cross-compilation or architecture-specific builds, use the CI/CD pipeline or local cross-compilation toolchains. Do not SSH into test devices to compile code - this is slow, pollutes the test environment, and risks destabilizing the device.
+
+**Allowed on test devices:**
+- Deploying pre-built binaries/packages
+- Running and observing services
+- Checking logs and system state
+- Testing functionality
+
+**NOT allowed on test devices:**
+- Installing compilers, build tools, or development dependencies
+- Running `cargo build`, `npm install`, `make`, or similar build commands
+- Cloning source repositories for building
 
 ## About HaLOS
 
