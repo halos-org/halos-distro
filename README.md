@@ -28,7 +28,7 @@ Halos provides a **unified, browser-based administration experience**. Access th
 - **Container Store**: Browse and install containerized apps as native Debian packages
 - **Standard Tools**: Built on APT, systemd, and other proven Debian technologies
 - **Native Packages**: Container apps as .deb packages, managed like any other software
-- **Extensible Stores**: Multiple "stores" (marine apps, development tools, home automation) that filter and present relevant packages
+- **Extensible Stores**: Curated app collections (e.g., marine apps) that filter and present relevant packages
 - **Vanilla Compatible**: Works on standard Raspberry Pi OS with just `apt.hatlabs.fi` repo added
 
 ## What is Halos?
@@ -144,7 +144,7 @@ sudo apt install halos
 sudo apt install halos-marine
 ```
 
-The installation will set up Cockpit and all dependencies. Access the web interface at `https://<your-pi-ip>:9090/`.
+The installation will set up the full Halos stack including Traefik, Authelia, Homarr, and Cockpit. Access the web interface at `https://<hostname>.local/` after the containers start (2-3 minutes).
 
 ## Using Halos
 
@@ -167,7 +167,7 @@ Cockpit provides comprehensive system administration:
 
 - **Overview**: System resource monitoring and status
 - **Software**: Install and manage packages, including container apps
-- **Terminal**: Command-line access (SSH is not enabled by default)
+- **Terminal**: Command-line access directly in the browser
 - **Services**: Manage systemd services
 - **Logs**: View system and application logs
 - **Users**: User account management
@@ -179,7 +179,7 @@ Access Cockpit via the dashboard or directly at [`https://halos.local:9090/`](ht
 ![Container Apps Store](images/cockpit_container_apps.jpg)
 
 1. Open Cockpit and navigate to **Container Apps**
-2. Select a store filter (e.g., "Marine Apps") to browse available applications
+2. Browse categories or search for applications
 3. Click on an app to view details and install
 4. Installed apps run as systemd services and start automatically
 
@@ -195,12 +195,12 @@ Marine variants include the Marine App Store with applications such as:
 - **AvNav** ([`https://avnav.halos.local/`](https://avnav.halos.local/)): Marine navigation software
 - **OpenCPN** ([`https://opencpn.halos.local/`](https://opencpn.halos.local/)): Chartplotter and navigation software
 
-Install these from the Marine Apps store in Cockpit. Each subdomain requires accepting the self-signed certificate warning on first access.
+Install these from Container Apps in Cockpit. Each subdomain requires accepting the self-signed certificate warning on first access.
 
 ### Terminal Access
 
 - **Via Cockpit**: Click "Terminal" in the left sidebar
-- **Via SSH**: Not enabled by default in Desktop images. Enable SSH via Cockpit Services if needed: `sudo systemctl enable --now ssh`
+- **Via SSH**: Enabled by default in headless images. For Desktop images, enable via Cockpit Services: `sudo systemctl enable --now ssh`
 
 ## Known Issues
 
@@ -214,15 +214,7 @@ This can be done via the Cockpit terminal.
 
 **Self-signed certificates**: Each hostname requires accepting the browser security warning once. If you change the hostname, you'll need to accept the certificate again for the new hostname.
 
-## Planned Features
-
-These features are planned but not yet implemented:
-
 ## Roadmap
-
-Halos development continues with these planned improvements:
-
-### Planned Features
 
 - **Expanded app catalog**: More marine and general-purpose container apps
 - **Let's Encrypt certificates**: Automatic HTTPS certificates for public-facing installations
