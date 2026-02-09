@@ -53,6 +53,8 @@ This workspace manages multiple independent repositories. While each repository 
 
 **Changelog Policy**: Never edit `debian/changelog` files directly. Always use `./run bumpversion` which uses the `dch` tool for proper RFC 2822 date formatting. Direct edits cause weekday/date mismatches that break Debian tools. See individual repository AGENTS.md for details.
 
+**Version Bumps**: PRs that change package-affecting files must include a version bump. CI enforces this — see each repository's version management docs for how to bump. Docs, tests, CI config, and dev tooling changes are automatically excluded.
+
 ## Structure
 
 ```
