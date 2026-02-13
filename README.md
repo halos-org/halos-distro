@@ -88,6 +88,9 @@ Halos comes in multiple variants to suit different hardware and use cases:
 | `Halos-Marine-RPI` | Generic RPi | No | Yes |
 | `Halos-Desktop-Marine-RPI` | Generic RPi | Yes | Yes |
 
+**Pre-installation image:**
+- `Halos-Desktop-Marine-HALPI2-AP`: Same as `Halos-Desktop-Marine-HALPI2` but with a default WiFi access point pre-configured (for initial setup without wired Ethernet)
+
 **Stock Raspberry Pi OS variants** (with HALPI2 drivers but no Halos web stack):
 - `Raspios-lite-HALPI2`: Headless Raspberry Pi OS with HALPI2 drivers
 - `Raspios-HALPI2`: Desktop Raspberry Pi OS with HALPI2 drivers
