@@ -118,7 +118,8 @@ For generic Raspberry Pi, follow these steps:
 
 1. Insert the card/drive into your Raspberry Pi and power on
 2. Wait 2-3 minutes for first boot initialization and container startup
-3. Access the web interface at [`https://halos.local/`](https://halos.local/)
+3. Connect via Ethernet, or for AP images, connect to the `Halos-XXXX` WiFi network (password: `halos1234`), where XXXX is unique to your device
+4. Access the web interface at [`https://halos.local/`](https://halos.local/)
 
 **Self-signed certificate warning**: Your browser will warn about the self-signed certificate. Accept/bypass this warning once per hostname to proceed. It feels like there are many warnings to dismiss, but this is a one-time setup step. Future versions will address this.
 
@@ -128,7 +129,7 @@ For generic Raspberry Pi, follow these steps:
 
 **Important:** Change the default password immediately after first login via the Cockpit Users panel.
 
-**Backup access**: If the main interface is unavailable, Cockpit is directly accessible at [`https://halos.local:9090/`](https://halos.local:9090/) (uses system user `pi` with password `raspberry`).
+**Backup access**: If the main interface is unavailable, Cockpit is directly accessible at [`https://halos.local:9090/`](https://halos.local:9090/) (uses system user `pi` with password `halos`).
 
 ## Installing on Vanilla Raspberry Pi OS
 
