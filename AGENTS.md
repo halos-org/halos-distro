@@ -113,7 +113,7 @@ cd halos-pi-gen
 
 # Work in a specific repository
 cd halos-pi-gen
-git pull origin halos
+git pull origin main
 # make changes, commit, push
 cd ..
 ```
