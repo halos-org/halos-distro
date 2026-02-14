@@ -41,6 +41,8 @@ For cross-compilation or architecture-specific builds, use the CI/CD pipeline or
 
 Halos (Hat Labs Operating System) - custom Raspberry Pi OS distribution with web management.
 
+**Documentation**: [docs.halos.fi](https://docs.halos.fi) | **Website**: [halos.fi](https://halos.fi)
+
 This workspace manages multiple independent repositories. While each repository works independently from a code perspective, agentic coding requires the full workspace context.
 
 ## Git Workflow Policy
