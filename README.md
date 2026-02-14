@@ -1,5 +1,7 @@
 # Halos Raspberry Pi OS Distribution
 
+**[Documentation](https://docs.halos.fi)** | **[Website](https://halos.fi)** | **[Downloads](https://github.com/hatlabs/halos-pi-gen/releases/latest)**
+
 ## TL;DR
 
 - Download the image you want at https://github.com/hatlabs/halos-pi-gen/releases/latest
