@@ -4,7 +4,7 @@
 
 ## TL;DR
 
-- Download the image you want at https://github.com/hatlabs/halos-pi-gen/releases/latest
+- Download the image you want at https://github.com/halos-org/halos-pi-gen/releases/latest
 - Flash to SSD or SD-card
 - Boot the device
 - Access https://halos.local (assuming wired Ethernet connection)
@@ -101,7 +101,7 @@ Halos comes in multiple variants to suit different hardware and use cases:
 
 ### 1. Download the Image
 
-Download your chosen image from the [Halos releases page](https://github.com/hatlabs/halos-pi-gen/releases).
+Download your chosen image from the [Halos releases page](https://github.com/halos-org/halos-pi-gen/releases).
 
 ### 2. Flash to SD Card or SSD
 
@@ -239,8 +239,8 @@ This can be done via the Cockpit terminal.
 
 ### Get Involved
 
-- **Discussions**: [GitHub Discussions](https://github.com/hatlabs/halos-distro/discussions) - Ask questions, share ideas, and connect with other users
-- **Follow Progress**: [GitHub Issues](https://github.com/hatlabs/halos-distro/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/halos-org/halos-distro/discussions) - Ask questions, share ideas, and connect with other users
+- **Follow Progress**: [GitHub Issues](https://github.com/halos-org/halos-distro/issues)
 - **Provide Feedback**: Open issues with feature requests or bug reports
 - **Contribute**: See individual component repositories for contribution guidelines
 

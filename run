@@ -31,17 +31,17 @@ readonly SCRIPT="$PROJECT_ROOT/$(basename "$0")"
 # Repository Definitions
 
 declare -A REPOS=(
-  ["halos-pi-gen"]="git@github.com:hatlabs/halos-pi-gen.git main"
+  ["halos-pi-gen"]="git@github.com:halos-org/halos-pi-gen.git main"
   ["apt.hatlabs.fi"]="git@github.com:hatlabs/apt.hatlabs.fi.git main"
   ["runtipi-marine-app-store"]="git@github.com:hatlabs/runtipi-marine-app-store.git main"
   ["runtipi-docker-service"]="git@github.com:hatlabs/runtipi-docker-service.git main"
   ["avnav-docker"]="git@github.com:hatlabs/avnav-docker.git main"
-  ["opencpn-docker"]="git@github.com:hatlabs/opencpn-docker.git main"
-  ["cockpit-apt"]="git@github.com:hatlabs/cockpit-apt.git main"
-  ["cockpit-branding-halos"]="git@github.com:hatlabs/cockpit-branding-halos.git main"
-  ["cockpit-networkmanager-halos"]="git@github.com:hatlabs/cockpit-networkmanager-halos.git main"
-  ["halos-metapackages"]="git@github.com:hatlabs/halos-metapackages.git main"
-  ["halos-core-containers"]="git@github.com:hatlabs/halos-core-containers.git main"
+  ["opencpn-docker"]="git@github.com:halos-org/opencpn-docker.git main"
+  ["cockpit-apt"]="git@github.com:halos-org/cockpit-apt.git main"
+  ["halos-cockpit-config"]="git@github.com:halos-org/halos-cockpit-config.git main"
+  ["cockpit-networkmanager-halos"]="git@github.com:halos-org/cockpit-networkmanager-halos.git main"
+  ["halos-metapackages"]="git@github.com:halos-org/halos-metapackages.git main"
+  ["halos-core-containers"]="git@github.com:halos-org/halos-core-containers.git main"
 )
 
 ################################################################################

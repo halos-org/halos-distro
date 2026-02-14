@@ -91,7 +91,7 @@ The project structure should follow the same workspace approach as described
 above. (Of course, if you want to use an actual monorepo, no-one is stopping you!)
 
 Create a `docs/` directory in the workspace root. This is where all
-documentation files go. Copy the policy and workflow documents from another repo such as [halos-distro](https://github.com/hatlabs/halos-distro) to get started quickly.
+documentation files go. Copy the policy and workflow documents from another repo such as [halos-distro](https://github.com/halos-org/halos-distro) to get started quickly.
 
 You should at least have the following files:
 - [PROJECT_PLANNING_GUIDE.md](PROJECT_PLANNING_GUIDE.md)
