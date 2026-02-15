@@ -60,7 +60,7 @@ This workspace manages multiple independent repositories. While each repository 
 ## Structure
 
 ```
-halos-distro/
+halos/
 ├── halos-pi-gen/                  # Image builder
 ├── apt.hatlabs.fi/                # Custom APT repo
 ├── cockpit-apt/                   # Cockpit APT package manager
@@ -120,4 +120,4 @@ git pull origin main
 cd ..
 ```
 
-Each repository is managed independently. The halos-distro workspace tracks only shared documentation and convenience scripts.
+Each repository is managed independently. The halos workspace tracks only shared documentation and convenience scripts.

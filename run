@@ -2,7 +2,7 @@
 #
 # usage: ./run command [argument ...]
 #
-# Commands for managing the halos-distro workspace.
+# Commands for managing the halos workspace.
 #
 # See https://death.andgravity.com/run-sh
 # for an explanation of how it works and why it's useful.

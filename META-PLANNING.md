@@ -9,7 +9,7 @@
 This document coordinates the multi-component HaLOS Cockpit development effort. It provides high-level architecture decisions, phase planning, and pointers to detailed component designs.
 
 **For implementation details**, see component-specific DESIGN.md files linked below.
-**For progress tracking**, see [GitHub Issues](https://github.com/halos-org/halos-distro/issues) and [Project Board](https://github.com/orgs/halos-org/projects/1).
+**For progress tracking**, see [GitHub Issues](https://github.com/halos-org/halos/issues) and [Project Board](https://github.com/orgs/halos-org/projects/1).
 
 ## Vision: Browser-Based, Unified Administration
 
@@ -47,7 +47,7 @@ This document coordinates the multi-component HaLOS Cockpit development effort. 
 ### Repository Structure
 
 ```
-halos-distro/                      # Workspace coordinator (this repo)
+halos/                             # Workspace coordinator (this repo)
 ├── docs/                          # Cross-component design docs
 ├── halos-marine-containers/       # Marine apps + store definition
 │   └── docs/DESIGN.md
@@ -65,16 +65,16 @@ halos-distro/                      # Workspace coordinator (this repo)
 
 1. **halos-marine-containers** - Marine app definitions and store
    - [DESIGN.md](halos-marine-containers/docs/DESIGN.md) - App/store format, build process
-   - [Issue #14](https://github.com/halos-org/halos-distro/issues/14) - Implementation tracking
+   - [Issue #14](https://github.com/halos-org/halos/issues/14) - Implementation tracking
 
 2. **container-packaging-tools** - Package generation tooling
    - [DESIGN.md](container-packaging-tools/docs/DESIGN.md) - Tool architecture, templates
-   - [Issue #15](https://github.com/halos-org/halos-distro/issues/15) - Implementation tracking
+   - [Issue #15](https://github.com/halos-org/halos/issues/15) - Implementation tracking
 
 3. **cockpit-apt** - Store filtering and repository management
    - [CONTAINER_STORE_DESIGN.md](cockpit-apt/docs/CONTAINER_STORE_DESIGN.md) - UI/backend design
    - [ADR-001-container-store.md](cockpit-apt/docs/ADR-001-container-store.md) - Architecture decision
-   - [Issue #13](https://github.com/halos-org/halos-distro/issues/13) - Implementation tracking
+   - [Issue #13](https://github.com/halos-org/halos/issues/13) - Implementation tracking
 
 ### Phase 2+ Components (Concept)
 
@@ -198,8 +198,8 @@ halos-distro/                      # Workspace coordinator (this repo)
 ## GitHub Tracking
 
 **Project Board**: [HaLOS Development](https://github.com/orgs/halos-org/projects/1)
-**Milestones**: [View all milestones](https://github.com/halos-org/halos-distro/milestones)
-**Issues**: [View open issues](https://github.com/halos-org/halos-distro/issues)
+**Milestones**: [View all milestones](https://github.com/halos-org/halos/milestones)
+**Issues**: [View open issues](https://github.com/halos-org/halos/issues)
 
 ### Issue Labels
 
