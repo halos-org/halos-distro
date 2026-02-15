@@ -1,4 +1,4 @@
-# Lefthook configuration for halos-distro workspace
+# Lefthook configuration for halos workspace
 # Install with: lefthook install
 
 pre-commit:
