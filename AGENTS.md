@@ -1,6 +1,6 @@
 # HaLOS Workspace - Agentic Coding Hub
 
-**LAST MODIFIED**: 2026-01-02
+**LAST MODIFIED**: 2026-02-16
 
 **Document Purpose**: Central workspace for agentic coding with Claude Code and other AI assistants. This workspace provides full context across all HaLOS repositories for optimal AI-assisted development.
 
@@ -78,10 +78,22 @@ halos/
 ├── halos-metapackages/            # HaLOS metapackages (halos, halos-marine)
 ├── homarr-container-adapter/      # Homarr first-boot setup and container discovery
 ├── opencpn-docker/                # OpenCPN Docker image
+├── signalk-halpi/                 # Signal K plugin for HALPI2 monitoring (hatlabs org)
 └── shared-workflows/              # Reusable GitHub Actions workflows
 ```
 
 **Each repository has its own AGENTS.md** - read the appropriate one for detailed context.
+
+## GitHub Organizations and APT Repositories
+
+Repositories are split across two GitHub orgs:
+
+- **`halos-org`** — Most HaLOS repos. APT packages deploy to `halos-org/apt.halos.fi`.
+- **`hatlabs`** — Hardware-specific repos (`signalk-halpi`), upstream forks (`homarr`, `signalk-server`, `signalk-alert-manager`), and `apt.hatlabs.fi`. APT packages deploy to `hatlabs/apt.hatlabs.fi`.
+
+When configuring CI workflows, always use the correct `apt-repository` input for the shared workflows. Repos in `hatlabs` must explicitly set `apt-repository: hatlabs/apt.hatlabs.fi` (the default is `halos-org/apt.halos.fi`).
+
+**Important**: Each org has its own copy of `shared-workflows`. Repos in `hatlabs` should reference `hatlabs/shared-workflows` (which defaults to `hatlabs/apt.hatlabs.fi`), and repos in `halos-org` should reference `halos-org/shared-workflows` (which defaults to `halos-org/apt.halos.fi`). Using the correct org's shared-workflows avoids needing to override the `apt-repository` input.
 
 ## Quick Start
 
